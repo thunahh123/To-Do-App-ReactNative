@@ -25,22 +25,22 @@ import { View, Text, TouchableOpacity, StyleSheet, Switch } from 'react-native';
 //     )
 // }
 
-const ToDoItem = (props) => {
+const ToDoItem = ({task, onToggle, onDelete}) => {
   return (
     <View style={styles.todoItem}>
       <Switch
-        value={props.task.completed}
-        onValueChange={props.onToggle}
+        value={task.completed}
+        onValueChange={onToggle}
       />
 
-      <Text style={[styles.todoItemText, props.task.completed && styles.completed]}>
-        {props.task.text}
+      <Text style={[styles.todoItemText, task.completed && styles.completed]}>
+        {task.text}
       </Text>
 
 
       <TouchableOpacity
         style={styles.deleteButton}
-        onPress={props.onDelete}
+        onPress={onDelete}
       >
         <Text style={{ color: '#fff' }}>Delete</Text>
       </TouchableOpacity>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   todoItemText: {
-    flex: 1, // Allow the text to take up remaining space
+    
     marginRight: 8,
     color: '#333',
   },

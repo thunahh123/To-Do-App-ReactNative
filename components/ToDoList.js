@@ -1,5 +1,5 @@
 // components/TodoList.js
-import { SafeAreaView, StyleSheet, Text, TextInput, Alert, Button,  } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TextInput, Alert, Button, FlatList } from 'react-native';
 import React, { useState } from 'react';
 import ToDoItem from './ToDoItem';
 
@@ -7,7 +7,7 @@ export default function ToDoList() {
 
     //State Hooks
     const [task, setTask] = useState("");
-    const [listTask, setListTask] = useState([{ id: 1, text: 'Study', completed: false }]);
+    const [listTask, setListTask] = useState([{ id: 1, text: 'Add To Do', completed: false }]);
 
 
     //Function to Add New Task
@@ -44,7 +44,7 @@ export default function ToDoList() {
     }
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>To Do List</Text>
+            <Text style={styles.title}>To Do App</Text>
             <TextInput
                 placeholder="Enter a task"
                 style={styles.textInput}
@@ -52,18 +52,40 @@ export default function ToDoList() {
                 onChangeText={setTask} />
 
             <Button title='Add To Do' onPress={addTask} />
+
             {listTask.length>0?
+
+            <FlatList style={styles.list}
+                data={listTask}
+                keyExtractor={item => item.id}
+                renderItem={({item})=><ToDoItem
+                        task={item}
+                        onToggle={() => toggleCompleted(item.id)}
+                        onDelete={() => showDeleteConfirmation(item.id)}
+                
+                    />}
             
-                listTask.map(task => (
-                    <ToDoItem
-                        key={task.id}
-                        task={task}
-                        // deleteTask={showDeleteConfirmation}
-                        // toggleCompleted={toggleCompleted}
-                        onToggle={() => toggleCompleted(task.id)}
-                        onDelete={() => showDeleteConfirmation(task.id)}
-                    />
-                ))
+            />
+
+
+
+
+
+
+                // {/* {listTask.map(task => (
+                //     <ToDoItem
+                //         key={task.id}
+                //         task={task}
+                //         // deleteTask={showDeleteConfirmation}
+                //         // toggleCompleted={toggleCompleted}
+                //         onToggle={() => toggleCompleted(task.id)}
+                //         onDelete={() => showDeleteConfirmation(task.id)}
+                //     />
+                // ))} */}
+
+                
+            
+                
             : <Text>No Task Now</Text>}
             
 
@@ -120,5 +142,8 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
     },
+    list:{
+
+    }
     
 });
